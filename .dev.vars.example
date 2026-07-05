@@ -1,0 +1,11 @@
+# Copy this file to .dev.vars and fill in your actual credentials
+# WARNING: DO NOT commit .dev.vars to GitHub!
+
+EXCHANGE_API_KEY="organizations/.../apiKeys/..."
+EXCHANGE_PRIVATE_KEY="-----BEGIN EC PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END EC PRIVATE KEY-----\n"
+EXCHANGE_API_URL="https://api.coinbase.com"
+JWT_ISSUER="cdp"
+RESEND_API_KEY="re_..."
+NOTIFICATION_EMAIL="you@example.com"
+BTC_DCA_AMOUNT="20.00"
+ETH_DCA_AMOUNT="20.00"
