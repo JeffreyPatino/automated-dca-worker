@@ -6,17 +6,7 @@ export default {
 	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
 		// ctx.waitUntil ensures the worker stays alive until the promise resolves
 		ctx.waitUntil(executeDCA(env));
-	},
-	
-	// Exposing fetch for easy local testing via `wrangler dev`
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		try {
-			await executeDCA(env);
-			return new Response("DCA execution completed successfully.", { status: 200 });
-		} catch (error: any) {
-			return new Response(`DCA execution failed: ${error.message}`, { status: 500 });
-		}
-	},
+	}
 };
 
 async function executeDCA(env: Env) {
