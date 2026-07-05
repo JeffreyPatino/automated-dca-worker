@@ -6,6 +6,11 @@ export default {
 	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
 		// ctx.waitUntil ensures the worker stays alive until the promise resolves
 		ctx.waitUntil(executeDCA(env));
+	},
+	
+	// Catch all HTTP requests and return 404 to prevent unauthorized execution
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		return new Response("Not Found", { status: 404 });
 	}
 };
 
