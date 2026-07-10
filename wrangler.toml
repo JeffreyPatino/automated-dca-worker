@@ -5,7 +5,7 @@ compatibility_date = "2024-05-29"
 # We run this once a week on Friday at 21:00 UTC (4:00 PM EST) to allow deposits to clear
 # You can change this to suit your schedule
 [triggers]
-crons = ["0 21 * * fri"]
+crons = ["0 20 * * fri"]
 
 # We will inject the following securely via Cloudflare Secrets to keep them out of GitHub:
 # EXCHANGE_API_KEY
