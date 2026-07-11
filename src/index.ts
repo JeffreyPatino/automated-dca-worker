@@ -1,4 +1,4 @@
-import { Env, sendErrorEmail } from './email';
+import { Env, sendErrorEmail, sendSuccessEmail } from './email';
 import { getAvailableBalance, placeMarketBuyOrder } from './exchange';
 
 export default {
@@ -48,6 +48,7 @@ async function executeDCA(env: Env) {
 		await placeMarketBuyOrder(env, "ETH-USD", ethAmount.toString());
 
 		console.log("DCA execution completed successfully.");
+		await sendSuccessEmail(env, btcAmount.toFixed(2), ethAmount.toFixed(2));
 	} catch (error: any) {
 		console.error(`DCA execution failed with exception: ${error.message}`);
 		await sendErrorEmail(env, "Execution Exception", error.message);

@@ -51,3 +51,44 @@ export async function sendErrorEmail(env: Env, errorTitle: string, errorMessage:
 		console.error(`Exception while sending email: ${e.message}`);
 	}
 }
+
+export async function sendSuccessEmail(env: Env, btcAmount: string, ethAmount: string): Promise<void> {
+	if (!env.RESEND_API_KEY || !env.NOTIFICATION_EMAIL) {
+		return;
+	}
+
+	const payload = {
+		from: "Automated DCA Bot <onboarding@resend.dev>",
+		to: [env.NOTIFICATION_EMAIL],
+		subject: `✅ DCA Bot Success: Orders Executed`,
+		html: `<h2>Execution Successful</h2>
+               <p>Successfully placed market buy orders on the Exchange.</p>
+               <p><strong>BTC Order:</strong> $${btcAmount}</p>
+               <p><strong>ETH Order:</strong> $${ethAmount}</p>
+               <p><strong>Time:</strong> ${new Date().toISOString()}</p>`
+	};
+
+	let apiKey = env.RESEND_API_KEY.trim();
+	if (apiKey.startsWith('"') && apiKey.endsWith('"')) {
+		apiKey = apiKey.substring(1, apiKey.length - 1);
+	}
+
+	try {
+		const response = await fetch("https://api.resend.com/emails", {
+			method: "POST",
+			headers: {
+				"Authorization": `Bearer ${apiKey}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(payload),
+		});
+
+		if (!response.ok) {
+			console.error(`Failed to send success email: ${response.status}`);
+		} else {
+			console.log(`Successfully sent success email.`);
+		}
+	} catch (e: any) {
+		console.error(`Exception while sending success email: ${e.message}`);
+	}
+}
